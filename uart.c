@@ -19,6 +19,7 @@ void uart_init(void)
     UBRR0H = BAUDRATE >> 8; // Put high 8 bits in H register
     UBRR0L = BAUDRATE;        // Put low 8 bits in L register
     // setup printf
+    stdin = stdout = &mystdio;
 }
 
 int uart_transmit (char data, FILE *stream)
