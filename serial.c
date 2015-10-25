@@ -1,8 +1,7 @@
-#define F_CPU 1000000
 #define BAUD 4800
 
-#include <stdio.h>
 #include <avr/io.h>
+#include <util/delay.h>
 #include "uart.h"
 
 int main()
@@ -11,15 +10,17 @@ int main()
     char in[30]; // input buffer
     while(1)
     {
-        // read a string (counts space as enter, cus c works that way)
-        // hopefully we don't have to read multiple strings but if we do it'll take some googling
-        // you can google how to use scanf
-        scanf("%s", in);
-         
-        // echo what the user typed
-        // this print function is equivalent to printf("stuff\n", args)
-        // it's a shortcut so you don't have to add \n to the end of every printf
-        print("\nyou typed %s", in);
-        // this is equivalent to printf("\nyou typed %s\n", in);
+        uart_receive();
+        print("this is a test\r\n");
+        read_echo(in);
+        print("you typed: ");
+        printLine(in);
+        _delay_ms(1000);
+        print(UART_SET_COLOR(31, 42));
+        /*
+         *command("[2J");
+         *command("[H");
+         */
+        print("Cleared Screen");
     }
 }
