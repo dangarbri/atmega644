@@ -9,7 +9,7 @@
 #define BAUD 4800
 #endif
 #define BAUDRATE ((F_CPU/(BAUD*16UL))-1)                        // Baud in bits per second
-void uart_init(void) 
+void uart_init(void)
 {
     // enable transmitter and receiver
     UCSR0B |= (1 << TXEN0)|(1<<RXEN0);
@@ -43,7 +43,7 @@ char uart_receive_echo()
     if(in == '\r') // if user hit enter, also add new line
         uart_transmit('\n');
     // handle backspace
-    if(in == BACKSPACE_IN)  backspace(); 
+    if(in == BACKSPACE_IN)  backspace();
     return in;
 }
 
@@ -51,7 +51,7 @@ char uart_receive()
 {
     // (UCSR0A & (1 << RXC0) equals 0 when there is no data
     while ( !(UCSR0A & (1 << RXC0)));
-    char in = UDR0; 
+    char in = UDR0;
     return in;
 }
 
@@ -65,6 +65,25 @@ void printLine(char *output)
 {
     print(output); // print as normal
     print(NEWLINE); // add new line
+}
+
+void printNumber(unsigned int num)
+{
+    char digits[8];
+    int i = 0;
+    int digit;
+    while(num > 10)
+    {
+        int sub = num / 10;
+        digit = num - (sub*10);
+        num /= 10;
+        digits[i++] = digit + '0';
+    }
+    digits[i++] = num + '0';
+    int j;
+    for( j = i-1; j > -1; j--)
+        uart_transmit(digits[j]);
+    print(NEWLINE);
 }
 
 void read(char* buffer)
