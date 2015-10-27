@@ -16,7 +16,7 @@ void intro()
     uart_receive();
     printLine(poundLine);
     printLine("Game Objective: ");
-    printLine("Think of any number less than or equal to 1,000.");
+    printLine("Think of any number less than or equal to 65,000.");
     printLine("The computer will then guess a number.");
     printLine("You can respond with the following: ");
     printLine("h : Your number is higher than what the computer guessed.");
