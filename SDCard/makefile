@@ -8,4 +8,6 @@ all:
 	rm sdcard.o
 
 install:
-	sudo ../avr -i main
+	avr-objcopy -j .text -j .data -O ihex main main.hex
+	avrdude -c usbtiny -p atmega644 -U flash:w:main.hex
+
