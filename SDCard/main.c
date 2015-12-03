@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include "../Serial/uart.h"
 #include "sdcard.h"
+#include <stdio.h>
 
 unsigned char started = 0;
 void start_program();
@@ -19,7 +20,7 @@ int main()
     {
         start_program(); // loop until something is received from uart
         print(">> ");
-        input = uart_receive_echo();
+        scanf("%c", &input);
         uart_transmit('\n');
         process_command(input);
     }
@@ -40,13 +41,13 @@ void process_command(char in) {
 }
 
 void print_help() {
-    printLine("Command List:");
-    printLine("0: Print this list");
-    printLine("1: Go Idle State");
+    puts("Command List:");
+    puts("0: Print this list");
+    puts("1: Initialize sd card");
 }
 
 void invalid_command() {
-    printLine("Invalid command");
+    puts("Invalid command");
 }
 
 

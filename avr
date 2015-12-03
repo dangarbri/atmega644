@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function install {
+    avr-objcopy -j .text -j .data -O ihex $1 $1.hex
+    avrdude -c usbtiny -p atmega644 -U flash:w:$1.hex
+    rm $1.hex
+}
+
+function build {
+    avr-gcc -O -DF_CPU=1000000 -mmcu=atmega644 $1 -o $1.elf
+}
+
+function buildinstall {
+    build $1
+    install $1.elf
+}
+
+if [ "$1" = "-i" ] 
+then
+    install $2
+else
+    buildinstall $1
+fi
