@@ -47,7 +47,7 @@ int SD_init()
         spi_rxtx(0xFF);
 
         print("Cmd 41");
-        send_command(41, 0, 0, 0, 0, 0x01);
+        send_command(41, 0x40, 0, 0, 0, 0x01);
         success = receive_data(0);
         if(success)
             break;
